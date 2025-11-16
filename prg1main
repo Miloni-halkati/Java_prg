@@ -1,0 +1,70 @@
+import java.util.*;
+
+// Student class implementing Comparable (sort by roll number)
+class Student implements Comparable<Student> {
+    int rollNo;
+    String name;
+
+    Student(int rollNo, String name) {
+        this.rollNo = rollNo;
+        this.name = name;
+    }
+
+    public int compareTo(Student s) {
+        return this.rollNo - s.rollNo;
+    }
+
+    public String toString() {
+        return rollNo + "   " + name;
+    }
+}
+
+// Comparator to sort by name
+class NameComparator implements Comparator<Student> {
+    public int compare(Student s1, Student s2) {
+        return s1.name.compareTo(s2.name);
+    }
+}
+
+class Main {   // <--- Universal main class name
+
+    public static void main(String[] args) {
+
+        List<Student> list = new ArrayList<>();
+        list.add(new Student(103, "Vivek"));
+        list.add(new Student(101, "Leena"));
+        list.add(new Student(104, "Sanjay"));
+        list.add(new Student(102, "Rohan"));
+        list.add(new Student(105, "Sneha"));
+
+        System.out.println("Original List:");
+        for (Student s : list) System.out.println(s);
+
+        Collections.sort(list);
+        System.out.println("\nSorted by Roll Number:");
+        for (Student s : list) System.out.println(s);
+
+        Collections.sort(list, new NameComparator());
+        System.out.println("\nSorted by Name:");
+        for (Student s : list) System.out.println(s);
+
+        System.out.println("\nIterating using Iterator:");
+        Iterator<Student> it = list.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+
+        Map<Integer, Student> map = new HashMap<>();
+        for (Student s : list) map.put(s.rollNo, s);
+
+        System.out.println("\nHashMap Entries:");
+        for (Map.Entry<Integer, Student> e : map.entrySet()) {
+            System.out.println("Key: " + e.getKey() + "  Value: " + e.getValue());
+        }
+
+        if (list instanceof RandomAccess) {
+            System.out.println("\nArrayList supports RandomAccess");
+            System.out.println("Access element at index 2: " + list.get(2));
+        }
+    }
+}
