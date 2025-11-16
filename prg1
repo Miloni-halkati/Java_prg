@@ -1,0 +1,47 @@
+package com.java;
+
+import java.util.*;
+
+public class q1 {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter lower bound of range: ");
+        int lower = scanner.nextInt();
+
+        System.out.print("Enter upper bound of range: ");
+        int upper = scanner.nextInt();
+
+        System.out.print("Enter how many random numbers to generate: ");
+        int count = scanner.nextInt();
+
+        List<Integer> numbers = new ArrayList<>();
+        Random rand = new Random();
+
+        while (numbers.size() < count) {
+            int num = rand.nextInt(upper - lower + 1) + lower;
+            if (num % 10 == 0) {      // simpler check (divisible by 2 & 5)
+                numbers.add(num);
+            }
+        }
+
+        System.out.println("\nOriginal List: " + numbers);
+
+        numbers.sort((a, b) -> {
+            int tensA = (a / 10) % 10;
+            int tensB = (b / 10) % 10;
+
+            // Primary sort: tens digit
+            if (tensA != tensB)
+                return Integer.compare(tensA, tensB);
+
+            // Secondary sort: full number (optional)
+            return Integer.compare(a, b);
+        });
+
+        System.out.println("Sorted by Tens Place: " + numbers);
+
+        scanner.close();
+    }
+}
